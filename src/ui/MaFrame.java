@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import beans.Acteur;
 import serveur.LanceurServer;
 import Client.Client;
 
@@ -42,7 +44,7 @@ public class MaFrame extends JFrame implements ActionListener
 		
 		//ComboBox
 		panelData.add(new JLabel("Liste des acteurs :"));
-		panelData.add(this.comboActeur = new JComboBox<>()); //Modifier plus tard avec une liste acteur
+		panelData.add(this.comboActeur = new JComboBox<>()); 
 		
 		//Radio boutton genre
 		panelData.add(jrbFeminin=new JRadioButton("Féminin"));
@@ -87,8 +89,10 @@ public class MaFrame extends JFrame implements ActionListener
 		//Action sur le bouton Rafraichir
 		if(e.getSource()==this.jbRafraichir)
 		{
-			
-			client.refresh();
+			for(Acteur actor : client.refresh())
+			{
+				comboActeur.addItem(actor);
+			}
 		}
 		
 		//Action sur le bouton Infos

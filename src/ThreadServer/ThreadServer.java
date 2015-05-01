@@ -35,7 +35,7 @@ public class ThreadServer
 				//Recuperation de la commande 
 				String commande = object.getString("commande");
 				
-				System.out.println(commande);	
+				//System.out.println(commande);	
 				
 				//Creation du json reponse
 				JSONArray arrayRep = new JSONArray();
@@ -47,12 +47,11 @@ public class ThreadServer
 					
 					while(rs.next())
 					{
-						//Appele de la function creationJsonObjectActeurs et ajoute de chaque acteurs
+						//Appelle de la function creationJsonObjectActeurs et ajoute de chaque acteurs
 						arrayRep.put(creationJsonObjetActeurs(rs));
-						System.out.println("test");
 					}
 					
-					out.println(arrayRep);
+					out.println(arrayRep.toString());
 				}
 				else
 				{
@@ -85,8 +84,8 @@ public class ThreadServer
 		try {
 			objectRep.put("id", Integer.toString(rs.getInt("codeActeur")));
 			objectRep.put("nomActeur", rs.getString("nomActeur"));
-			objectRep.put("prenom", rs.getString("prenomActeur"));
-			
+			objectRep.put("prenomActeur", rs.getString("prenomActeur"));
+						
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,8 +96,5 @@ public class ThreadServer
 		}
 		
 		return objectRep;
-		/*
-		Genre sexe=rs.getInt("sexeActeur")==1?Genre.Feminin:Genre.Masculin; //genre = enum
-		int annee=rs.getInt("anneeNaissanceActeur");*/
 	}
 }

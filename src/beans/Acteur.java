@@ -19,6 +19,15 @@ public class Acteur
 		this.anneeNaiss = anneeNaiss;
 	}
 
+	//Génération du constructeur qui va permettre d'afficher la liste des acteurs
+	public Acteur(int codeActeur, String nomActeur, String prenomActeur) {
+		this.codeActeur = codeActeur;
+		this.nomActeur = nomActeur;
+		this.prenomActeur = prenomActeur;
+	}
+
+
+
 	public int getCodeActeur() 
 	{
 		return codeActeur;
