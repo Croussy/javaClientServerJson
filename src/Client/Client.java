@@ -77,8 +77,6 @@ public class Client
 			objet.put("commande", "Infos");
 			objet.put("id", id);
 			
-			System.out.println(objet.get("commande"));
-			
 			out.println(objet);
 			
 			JSONObject actor = new JSONObject(in.readLine());
@@ -100,7 +98,14 @@ public class Client
 			object.put("commande", "Quitter");
 			out.println(object);
 			
-		} catch(JSONException e){
+			String reponseQuitter =  in.readLine();
+			
+			if(reponseQuitter == "ok")
+			{
+				System.out.println("Le serveur a quitté l'application !");
+			}
+			
+		} catch(JSONException | IOException e){
 			e.printStackTrace();
 		}
 	}

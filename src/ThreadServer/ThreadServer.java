@@ -89,7 +89,7 @@ public class ThreadServer
 					{
 						if (commande.equals("Quitter"))
 						{
-							System.out.println("Le serveur a quitté l'application !");
+							out.println("ok");
 							ss.close();
 						}
 					}
