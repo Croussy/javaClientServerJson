@@ -16,6 +16,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import beans.Acteur;
+import beans.Genre;
 import serveur.LanceurServer;
 import Client.Client;
 
@@ -98,7 +99,26 @@ public class MaFrame extends JFrame implements ActionListener
 		//Action sur le bouton Infos
 		if(e.getSource()== this.jbInfos)
 		{
+			int id = comboActeur.getSelectedIndex();
+			id = id + 1;
+			Acteur actor = client.infos(id);
 			
+			//Selection des radioButtons
+			if(actor.getGenre() == Genre.Feminin)
+			{
+				this.jrbFeminin.setSelected(true);
+				this.jrbMasculin.setSelected(false);
+			}
+			else
+			{
+				if(actor.getGenre() == Genre.Masculin)
+				{
+					this.jrbFeminin.setSelected(false);
+					this.jrbMasculin.setSelected(true);					
+				}
+			}
+			
+			jtfanneeNaiss.setText(Integer.toString(actor.getAnneeNaiss()));
 		}
 		
 		//Action sur le bouton Quitter

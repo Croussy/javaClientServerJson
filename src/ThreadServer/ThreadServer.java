@@ -35,9 +35,8 @@ public class ThreadServer
 				//Recuperation de la commande 
 				String commande = object.getString("commande");
 				
-				//System.out.println(commande);	
-				
-				//Creation du json reponse
+						
+				//Creation du json réponse
 				JSONArray arrayRep = new JSONArray();
 				
 				if (commande.equals("Rafraichir"))
@@ -57,7 +56,34 @@ public class ThreadServer
 				{
 					if(commande.equals("Infos"))
 					{
-						//Action
+						
+						JSONObject acteur = new JSONObject();
+						int id = Integer.parseInt(object.getString("id"));
+						
+						//Appelle SQL
+						rs = con.select("acteurs");
+						
+						
+						/* A VOIR AVEC LE PROF PB DANS LA REQUETE SQL
+						 * Pk pas faire un tableau qui regroupe tout les entrées de la base de données pour maximiser les appelles à la base
+						rs = con.select("acteurs where codeActeur = "+ id);
+						acteur = creationJsonObjetActeurs(rs);
+						*/
+						
+						//Parcours du resultset
+						while(rs.next())
+						{
+							//Si le code acteurs est égale à l'id sélectionné
+							if(rs.getInt("codeActeur") == id)
+							{
+								acteur = creationJsonObjetActeurs(rs);
+							}
+						}
+						
+						//System.out.println(acteur.toString());
+						
+						//Envoi de l'acteur
+						out.println(acteur.toString());
 					}
 					else
 					{
@@ -85,6 +111,8 @@ public class ThreadServer
 			objectRep.put("id", Integer.toString(rs.getInt("codeActeur")));
 			objectRep.put("nomActeur", rs.getString("nomActeur"));
 			objectRep.put("prenomActeur", rs.getString("prenomActeur"));
+			objectRep.put("sexe", rs.getInt("sexeActeur"));
+			objectRep.put("anneeNaiss", rs.getInt("anneeNaissanceActeur"));
 						
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

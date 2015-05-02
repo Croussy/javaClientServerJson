@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import beans.Acteur;
+import beans.Genre;
 
 public class Client 
 {
@@ -46,23 +47,18 @@ public class Client
 			//Envoi de la commande rafraichir
 			object.put("commande", "Rafraichir");
 			out.println(object);
-			
-			//Recuperation des données en string
-			String response = in.readLine();
-			//Convertion du string en array json
-			JSONArray jsonArray = new JSONArray(response);
-			
-			
-			//Recup des objets json à partir du array json
+
+			//Recuperation des données en json array
+			JSONArray jsonArray = new JSONArray(in.readLine());
+					
+			//Recupération des objets json à partir du array json
 			for (int i = 0; i < jsonArray.length(); i++)
 			{
 				acteurJson = jsonArray.getJSONObject(i);
 				actor = new Acteur(acteurJson.getInt("id"), acteurJson.getString("nomActeur"), acteurJson.getString("prenomActeur"));
 				listeActeurs.add(actor);
 			}
-			
-			
-			
+							
 		} catch (JSONException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,11 +66,32 @@ public class Client
 		return listeActeurs;
 		
 	}
-	public ArrayList<Acteur> infos(int id)
+	public Acteur infos(int id)
 	{
+		JSONObject objet = new JSONObject();
+		Acteur acteur = null;
+		Genre sexe = null;
 		
-		
-		return null;
+		try
+		{
+			objet.put("commande", "Infos");
+			objet.put("id", id);
+			
+			System.out.println(objet.get("commande"));
+			
+			out.println(objet);
+			
+			JSONObject actor = new JSONObject(in.readLine());
+			
+			sexe = actor.getInt("sexe") == 1?Genre.Feminin:Genre.Masculin;			
+			acteur = new Acteur(actor.getInt("id"), actor.getString("nomActeur"), actor.getString("prenomActeur"), sexe, actor.getInt("anneeNaiss"));
+			
+			
+		} catch (JSONException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return acteur;
 	}
 	public void quitter()
 	{
